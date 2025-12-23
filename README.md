@@ -10,7 +10,8 @@ The goal of this project is to proposes a novel geometric approach to the Hilber
 The documents are organized as follows:
 
 - **`/Reports`**: Contains the final PDF versions of the analysis.
-- **`Source_Code`** *(Optional)*: Scripts used to generate the charts.
+- ** https://rouaxe.github.io/documents-project/figure1_spirale.html
+- ** https://rouaxe.github.io/documents-project/figure2_alignement.html
 
 ## 🚀 Getting Started
 
