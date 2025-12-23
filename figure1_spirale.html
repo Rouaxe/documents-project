@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #000; margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // HIGH RESOLUTION CONFIGURATION
+    const size = 2000; // Virtual size for high quality
+    canvas.width = size;
+    canvas.height = size;
+    
+    const centerX = size / 2;
+    const centerY = size / 2;
+    const maxPrimes = 50000; // Number of points
+    const scale = size / (Math.sqrt(maxPrimes) * 2.2); 
+
+    function isPrime(num) {
+        if (num < 2) return false;
+        if (num === 2) return true;
+        if (num % 2 === 0) return false;
+        let s = Math.sqrt(num);
+        for(let i = 3; i <= s; i+=2) if(num % i === 0) return false;
+        return true;
+    }
+
+    // Fond Noir Profond
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, size, size);
+
+    // Dessin
+    for (let n = 1; n < maxPrimes; n++) {
+        // Sacks Spiral: r = sqrt(n), theta = sqrt(n) * 2 * pi
+        let r = Math.sqrt(n) * scale;
+        let theta = Math.sqrt(n) * 2 * Math.PI;
+        
+        let x = centerX + r * Math.cos(theta);
+        let y = centerY + r * Math.sin(theta);
+
+        if (isPrime(n)) {
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.arc(x, y, 1.5, 0, Math.PI*2); // Net points
+            ctx.fill();
+        } else {
+            // Cosmic dust (optional, very subtle)
+            ctx.fillStyle = "rgba(255, 255, 255, 0.02)";
+            ctx.fillRect(x, y, 1, 1);
+        }
+    }
+    
+    // Annotations (Optional for paper)
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText("Fig 1. Sacks Spiral Distribution", 20, size - 20);
+</script>
+</body>
+</html>

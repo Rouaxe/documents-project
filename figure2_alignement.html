@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #000; margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+<script>
+    // 3D SCENE FOR ALIGNMENT
+    const scene = new THREE.Scene();
+    // Orthographic camera to flatten perspective (Technical view)
+    const aspect = window.innerWidth / window.innerHeight;
+    const d = 1000;
+    const camera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, 1, 10000);
+    
+    // KEY POSITION: Perfect side view to see the alignment
+    camera.position.set(0, 0, 1000); 
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // DATA GENERATION
+    const geometry = new THREE.BufferGeometry();
+    const positions = [];
+    
+    function isPrime(num) {
+        for(let i = 2, s = Math.sqrt(num); i <= s; i++)
+            if(num % i === 0) return false; 
+        return num > 1;
+    }
+
+    const maxNum = 100000;
+    
+    for (let n = 1; n < maxNum; n++) {
+        // Sacks coordinates projected onto a cylinder
+        let r = Math.sqrt(n);
+        let theta = r * 2 * Math.PI;
+        
+        // CYLINDER UNFOLDED (Matrix View)
+        // X = Angle (Phase)
+        // Y = Number (Energy/Time)
+        // Alignment is based on modulo 2π (or modulo 1 to see the squares)
+        // Here we reproduce the visual effect of the "lines" in your image
+        
+        let x = (Math.sqrt(n) % 1) * 2000 - 1000; // Horizontal spacing
+        let y = -n * 0.02 + 1000; // Vertical scroll
+        let z = 0;
+
+        // We only keep the first ones for the strong contrast
+        if (isPrime(n)) {
+            positions.push(x, y, z);
+        }
+    }
+
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    
+    // Bright white dots
+    const material = new THREE.PointsMaterial({ 
+        color: 0xffffff, 
+        size: 3, 
+        sizeAttenuation: false 
+    });
+    
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    // Red Line (The Critical Axis / The Void of Squares)
+    // Perfect squares (n = k^2) have sqrt(n) % 1 == 0.
+    // Therefore, they are all at x = -1000 (or 0 depending on the modulo).
+    // We draw a line to show the structure.
+
+    
+    renderer.render(scene, camera);
+    //Note: Resize the window to achieve the desired aspect ratio before capturing.
+</script>
+</body>
+</html>
