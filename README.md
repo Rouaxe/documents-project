@@ -9,9 +9,10 @@ The goal of this project is to proposes a novel geometric approach to the Hilber
 
 The documents are organized as follows:
 
-- ** https://rouaxe.github.io/documents-project/final_report.pdf
-- ** https://rouaxe.github.io/documents-project/figure1_spirale.html
-- ** https://rouaxe.github.io/documents-project/figure2_alignement.html
+- https://rouaxe.github.io/documents-project/final_report.pdf
+- https://rouaxe.github.io/documents-project/figure1_spirale.html
+- https://rouaxe.github.io/documents-project/figure2_alignement.html
+- https://rouaxe.github.io/documents-project/elliptical-confinement-theorem.pdf
 
 ## 🚀 Getting Started
 
